@@ -1,5 +1,10 @@
+import 'package:ayaproject/api/api.dart';
+import 'package:ayaproject/models/client/client_model.dart';
+import 'package:ayaproject/services/clientServices/get_client_services.dart';
+import 'package:ayaproject/services/userServices/get_user_services.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
+import 'models/user/user_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,39 +35,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: FutureBuilder<List<UserModel>>(
+          future: GetUserServices().usersServices(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text('hello', style: TextStyle(color: Colors.black));
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          }),
     );
   }
 }

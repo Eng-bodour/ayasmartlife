@@ -6,10 +6,8 @@ class ClientModel {
   final String city;
   final String location;
   final int fkRegoin;
-
   final int fkUser;
   final String typeClient;
-
   final int mobile;
   //final String dateTransfer;
   //final String dateChangetype;

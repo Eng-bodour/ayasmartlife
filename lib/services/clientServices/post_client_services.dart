@@ -1,5 +1,6 @@
 import 'package:ayaproject/api/api.dart';
-import 'package:ayaproject/models/client_model.dart';
+
+import '../../models/client/client_model.dart';
 
 class AddClientServices {
   Future<ClientModel> addClient(
@@ -29,6 +30,7 @@ class AddClientServices {
         'fk_regoin': fk_regoin,
         'type_client': type_client,
       },
+      token: '',
     );
     return ClientModel.fromJson(data);
   }
