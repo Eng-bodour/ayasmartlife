@@ -1,3 +1,4 @@
+import 'package:ayaproject/constant.dart';
 import 'package:ayaproject/models/user/user_model.dart';
 
 import '../../api/api.dart';
@@ -14,7 +15,7 @@ class AddUserServices {
     required String regoin,
   }) async {
     Map<String, dynamic> data = await Api().post(
-      url: 'https://aya.epaysadaka.com/api/client/clientAdd.php',
+      url: '$uri/client/clientAdd.php',
       body: {
         'nameUser': nameUser,
         'email': email,

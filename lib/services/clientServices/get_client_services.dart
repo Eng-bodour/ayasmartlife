@@ -1,10 +1,10 @@
 import 'package:ayaproject/api/api.dart';
+import 'package:ayaproject/constant.dart';
 import 'package:ayaproject/models/client/client_model.dart';
 
-class AllClientServices {
-  Future<List<ClientModel>> clientServices() async {
-    List<dynamic> data = await Api()
-        .get(url: 'https://aya.epaysadaka.com/api/client/getClientAll.php');
+class GetClientServices {
+  Future<List<ClientModel>> clientsServices() async {
+    List<dynamic> data = await Api().get(url: '$uri/client/getClientAll.php');
 
     List<ClientModel> clientsList = [];
 

@@ -1,15 +1,15 @@
 class UserModel {
-  final int idUser;
-  final String nameUser;
-  final String email;
-  final String mobile;
-  final int codeVerfiy;
-  final int fkCountry;
-  final String typeAdministration;
-  final int typeLevel;
-  final int fkRegoin;
-  final String nameCountry;
-  final String nameRegoi;
+  String? idUser;
+  String? nameUser;
+  String? email;
+  String? mobile;
+  String? codeVerfiy;
+  String? fkCountry;
+  String? typeAdministration;
+  String? typeLevel;
+  String? fkRegoin;
+  String? nameCountry;
+  String? nameRegoi;
 
   UserModel({
     required this.idUser,

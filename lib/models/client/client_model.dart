@@ -1,20 +1,20 @@
 class ClientModel {
-  final int idClients;
+  String? idClients;
 
-  final String nameClient;
-  final String typeJob;
-  final String city;
-  final String location;
-  final int fkRegoin;
-  final int fkUser;
-  final String typeClient;
-  final int mobile;
+  String? nameClient;
+  String? typeJob;
+  String? city;
+  String? location;
+  String? fkRegoin;
+  String? fkUser;
+  String? typeClient;
+  String? mobile;
   //final String dateTransfer;
   //final String dateChangetype;
   // final String reasonChange;
   // final String reasonTransfer;
-  final int nameCountry;
-  final String nameRegoin;
+  String? nameCountry;
+  String? nameRegoin;
 
   ClientModel({
     required this.idClients,
@@ -54,23 +54,3 @@ class ClientModel {
     );
   }
 }
-
-
-
-// class ClientModel {
-//   final String resul;
-//   final int code;
-//   final MessageModel message;
-//   ClientModel({
-//     required this.resul,
-//     required this.code,
-//     required this.message,
-//   });
-//   factory ClientModel.fromJson(jsondata) {
-//     return ClientModel(
-//       resul: jsondata['resul'],
-//       code: jsondata['code'],
-//       message: MessageModel.fromJson(jsondata['message']),
-//     );
-//   }
-// }

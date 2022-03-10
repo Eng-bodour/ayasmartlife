@@ -1,34 +1,35 @@
 import 'package:ayaproject/api/api.dart';
+import 'package:ayaproject/constant.dart';
 
 import '../../models/client/client_model.dart';
 
 class AddClientServices {
   Future<ClientModel> addClient(
-      {required String name_client,
-      required String name_enterprise,
+      {required String nameClient,
+      required String nameEnterprise,
       required String mobile,
-      required String type_job,
+      required String typeJob,
       required String city,
       required String location,
-      required String date_create,
-      required String fk_user,
-      required String date_transfer,
-      required String fk_regoin,
-      required String type_client}) async {
+      required String dateCreate,
+      required String fkUser,
+      required String dateTransfer,
+      required String fkRegoin,
+      required String typeClient}) async {
     Map<String, dynamic> data = await Api().post(
-      url: 'https://aya.epaysadaka.com/api/client/clientAdd.php',
+      url: '$uri/client/clientAdd.php',
       body: {
-        'name_client': name_client,
-        'name_enterprise': name_enterprise,
+        'name_client': nameClient,
+        'name_enterprise': nameEnterprise,
         'mobile': mobile,
-        'type_job': type_job,
+        'type_job': typeJob,
         'city': city,
         'location': location,
-        'date_create': date_create,
-        'fk_user': fk_user,
-        'date_transfer': date_transfer,
-        'fk_regoin': fk_regoin,
-        'type_client': type_client,
+        'date_create': dateCreate,
+        'fk_user': fkUser,
+        'date_transfer': dateTransfer,
+        'fk_regoin': fkRegoin,
+        'type_client': typeClient,
       },
       token: '',
     );
