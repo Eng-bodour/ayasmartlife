@@ -34,8 +34,8 @@ class Api {
     int idx = result.indexOf("{");
     int length = result.length;
     result = result.substring(idx, length);
-    print(result);
-    print(json.decode(result)["code"]);
+    //print(result);
+   // print(json.decode(result)["code"]);
     if (json.decode(result)["code"] == "200") {
       return jsonDecode(result)["message"];
     } else {

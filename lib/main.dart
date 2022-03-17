@@ -1,5 +1,7 @@
-import 'package:ayaproject/view/user.dart';
+import 'package:ayaproject/routes/routes.dart';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const App());
@@ -10,8 +12,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: User(),
+    return GetMaterialApp(
+      //  home: AllUserScreen(),
+      initialRoute: AppRoutes.allUser,
+      getPages: AppRoutes.routes,
     );
   }
 }

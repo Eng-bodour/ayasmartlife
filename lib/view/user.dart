@@ -1,100 +1,268 @@
+import 'package:ayaproject/models/user/user_model.dart';
+import 'package:ayaproject/view%20model/user_view_model.dart';
+import 'package:ayaproject/view/edit_user.dart';
 import 'package:ayaproject/widget/widgetUser/test_utilis.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
-class User extends StatelessWidget {
-  User({Key? key}) : super(key: key);
+import '../view model/all_user_view_model.dart';
+import '../widget/widgetUser/row_widget.dart';
+
+class UserScreen extends StatelessWidget {
+  final UserModel userModel;
+  UserScreen({
+    required this.userModel,
+    Key? key,
+  }) : super(key: key);
 
   final scrollController = ScrollController(initialScrollOffset: 0);
-  bool isText = false;
-  bool isIcons = false;
+  final controllerUser = Get.find<UserVMController>();
+  final controllerUsers = Get.find<AllUserVMController>();
+  // final controller = Get.find<UserViewModel>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blueAccent.withOpacity(0.3),
-        appBar: AppBar(
-          title: TextUtilis(
-            color: Colors.amberAccent,
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
-            textstring: 'bodour',
-            underline: TextDecoration.none,
-          ),
-          backgroundColor: Colors.blueAccent,
-          centerTitle: true,
-          elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.edit,
-                color: Colors.amberAccent,
-              ),
-            )
-          ],
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(() => EditUser(
+                      userModel: controllerUsers.usersList[0],
+                    ));
+              },
+              icon: const Icon(Icons.edit)),
+        ],
+        title: TextUtilis(
+          color: Colors.amberAccent,
+          fontSize: 35,
+          fontWeight: FontWeight.bold,
+          textstring: userModel.nameUser.toString(),
+          underline: TextDecoration.none,
         ),
-        body: Column(
-          children: [
-            imageProfile(),
-            Expanded(
-              child: ListView.separated(
-                controller: scrollController,
-                itemCount: 6,
-                separatorBuilder: (context, index) => const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                  child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  ),
-                ),
-                itemBuilder: (context, index) {
-                  return infoUser();
-                },
-              ),
-            ),
-          ],
-        ));
-  }
-
-  Widget imageProfile() {
-    return Container(
-      height: 150,
+        backgroundColor: Colors.blueAccent,
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
+          imageProfile(context),
+          Expanded(
+            child: info(),
+            // child: ListView.separated(
+            //   controller: scrollController,
+            //   itemCount: 6,
+            //   separatorBuilder: (context, index) => const Padding(
+            //     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+            //     child: Divider(
+            //       color: Colors.grey,
+            //       thickness: 1,
+            //     ),
+            //   ),
+            //   itemBuilder: (context, index) {
+            //      return infoUser(name: userModel.nameUser.toString());
+            //   },
+            // ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget infoUser() {
+  Widget imageProfile(context) {
+    return Container(
+      height: 150,
+      child: Stack(
+        children: [
+          Obx(() {
+            return CircleAvatar(
+              radius: 80.0,
+              backgroundImage: controllerUser.imagefile == null
+                  ? const AssetImage('assets/images/smartlife.jpeg')
+                  : const AssetImage('assets/images/smartlife.jpeg'),
+            );
+          }),
+          Positioned(
+            bottom: 20.0,
+            right: 20.0,
+            child: InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: ((builder) => onTapCamer()),
+                );
+              },
+              child: Icon(
+                Icons.camera,
+                color: Colors.green,
+                size: 25,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget onTapCamer() {
+    return Container(
+      height: 100.0,
+      width: 50,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(children: [
+        TextUtilis(
+          color: Colors.black45,
+          fontSize: 20,
+          fontWeight: FontWeight.normal,
+          textstring: 'chose profile photo',
+          underline: TextDecoration.none,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FlatButton.icon(
+              onPressed: () {
+                controllerUser.takedPhoto(ImageSource.camera);
+              },
+              icon: Icon(
+                Icons.camera,
+              ),
+              label: Text('Camera'),
+            ),
+            FlatButton.icon(
+              onPressed: () {
+                controllerUser.takedPhoto(ImageSource.gallery);
+              },
+              icon: Icon(
+                Icons.browse_gallery,
+              ),
+              label: Text('Gallery'),
+            ),
+          ],
+        )
+      ]),
+    );
+  }
+
+  // Widget infoUser() {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: [
+  //         TextUtilis(
+  //           color: Colors.black,
+  //           fontSize: 35,
+  //           fontWeight: FontWeight.bold,
+  //           textstring: name,
+  //           underline: TextDecoration.none,
+  //         ),
+  //         isText
+  //             ? TextUtilis(
+  //                 color: Colors.black,
+  //                 fontSize: 100,
+  //                 fontWeight: FontWeight.normal,
+  //                 textstring: 'op manager',
+  //                 underline: TextDecoration.none,
+  //               )
+  //             : isIcons
+  //                 ? IconButton(onPressed: () {}, icon: const Icon(Icons.email))
+  //                 : TextButton(
+  //                     onPressed: () {},
+  //                     child: TextUtilis(
+  //                       color: Colors.black,
+  //                       fontSize: 100,
+  //                       fontWeight: FontWeight.normal,
+  //                       textstring: 'phone number',
+  //                       underline: TextDecoration.none,
+  //                     ),
+  //                   ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget info() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         children: [
-          TextUtilis(
-            color: Colors.black,
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
-            textstring: 'Descreptio',
-            underline: TextDecoration.none,
+          RowWidget(
+            name: 'Description',
+            des: userModel.typeAdministration.toString(),
           ),
-          isText
-              ? TextUtilis(
-                  color: Colors.black,
-                  fontSize: 100,
-                  fontWeight: FontWeight.normal,
-                  textstring: 'op manager',
+          RowWidget(
+            name: 'Region',
+            des: userModel.nameRegoi.toString(),
+          ),
+          RowWidget(
+            name: 'Level',
+            des: userModel.typeLevel.toString(),
+          ),
+          RowWidget(
+            name: 'Added by',
+            des: 'added',
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextUtilis(
+                color: Colors.black,
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+                textstring: userModel.email.toString(),
+                underline: TextDecoration.none,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.email,
+                  size: 20,
+                  color: Colors.blueAccent,
+                ),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Colors.grey,
+            thickness: 2,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextUtilis(
+                color: Colors.black,
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+                textstring: 'Mobile Number',
+                underline: TextDecoration.none,
+              ),
+              TextButton(
+                onPressed: () async {
+                  controllerUser.onPressPhone(userModel.mobile.toString());
+                },
+                child: TextUtilis(
+                  color: Colors.blueAccent,
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  textstring: userModel.mobile.toString(),
                   underline: TextDecoration.none,
-                )
-              : isIcons
-                  ? IconButton(onPressed: () {}, icon: const Icon(Icons.email))
-                  : TextButton(
-                      onPressed: () {},
-                      child: TextUtilis(
-                        color: Colors.black,
-                        fontSize: 100,
-                        fontWeight: FontWeight.normal,
-                        textstring: 'phone number',
-                        underline: TextDecoration.none,
-                      ),
-                    ),
+                ),
+              ),
+            ],
+          ),
+          const Divider(
+            color: Colors.grey,
+            thickness: 2,
+          ),
         ],
       ),
     );

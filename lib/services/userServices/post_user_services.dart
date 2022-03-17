@@ -15,7 +15,7 @@ class AddUserServices {
     required String regoin,
   }) async {
     Map<String, dynamic> data = await Api().post(
-      url: '$uri/client/clientAdd.php',
+      url: '$uri/users/addUser.php',
       body: {
         'nameUser': nameUser,
         'email': email,

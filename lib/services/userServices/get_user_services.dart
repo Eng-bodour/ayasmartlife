@@ -2,7 +2,6 @@ import 'package:ayaproject/constant.dart';
 import 'package:ayaproject/models/user/user_model.dart';
 
 import '../../api/api.dart';
-import 'package:http/http.dart' as http;
 
 class GetUserServices {
   Future<List<UserModel>> usersServices() async {
